@@ -61,28 +61,27 @@
         RadarChart.draw("#c3", data, null);
     });
 
-
     window.onload = function () {
 
-        var chart = new CanvasJS.Chart("workout", {
+        var chart = new CanvasJS.Chart("Workout App ", {
             animationEnabled: true,
             zoomEnabled: true,
             title:{
                 text: "Workout App for Northeastern"
             },
             axisX: {
-                title:"Frenquency go to gym (in times )",
+                title:"Frequency of go to gym per week (in times)",
                 minimum: 0,
                 maximum: 7
             },
             axisY:{
-                title: "how much do you spend on fitness per month(in USD)? ",
+                title: "The money spend on gym per month (in USD)",
                 valueFormatString: "$#,##0k"
             },
             data: [{
                 type: "scatter",
-                toolTipContent: "<b>Area: </b>{x} sq.ft<br/><b>Price: </b>${y}k",
                 dataPoints: [
+
                     { x: 6, y: 170 },
                     { x: 3, y: 25 },
                     { x: 3, y: 55 },
@@ -94,25 +93,14 @@
                     { x: 5, y: 128 },
                     { x: 3, y: 49 },
                     { x: 4, y: 79 },
-                    { x: 1330, y: 1120 },
-                    { x: 1580, y: 1220 },
-                    { x: 1620, y: 1400 },
-                    { x: 1250, y: 1450 },
-                    { x: 1350, y: 1600 },
-                    { x: 1650, y: 1300 },
-                    { x: 1700, y: 1620 },
-                    { x: 1750, y: 1700 },
-                    { x: 1830, y: 1800 },
-                    { x: 1900, y: 2000 },
-                    { x: 2050, y: 2200 },
-                    { x: 2150, y: 1960 },
-                    { x: 2250, y: 1990 }
-                ]
-            }]
-        });
-        chart.render();
+                    { x: 2, y: 30 },
+                    { x: 3, y: 47 },
+                    { x: 7, y: 140 },
+                    { x:6, y: 47 },
+                    { x: 3, y: 30 },
+                    { x: 2, y: 29 },
+                    { x: 1, y: 0 }
 
-    }
 
 </script>
 
