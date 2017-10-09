@@ -1,19 +1,126 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>HTML circles</title>
+    <title>Rader Chart Qingyue</title>
 
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="./d3.v4.2.6.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 
 </head>
 
+<style>
+    body{
+        margin:50px;
+        font-size:14px;
+        font-family: 'Open Sans', sans-serif;
+        background-color: #F1F3F3;
+    }
+
+    #chart {
+        position: absolute;
+        top: 70px;
+        left: 120px;
+    }
+</style>
+
 <body>
 
-    <svg width="500px" height="500px"></svg>
+    <div id="body">
+        <div>
+    <span id="c1"></span><span style="position:absolute; left:10px; top:10px;">aha</span>
+        <span id="c2"></span>
+        </div>
+        <div id="c3"></div>
+        <div id="c4"></div>
+        <div id="c5"></div>
+        <div id="c6"></div>
+        <div id="c7"></div>
+
 
 </body>
 
 <script src="./index.js"></script>
 
+<script>
+
+
+    //Call function to draw the Radar chart
+    d3.csv("data.csv", function(error, data) {
+        if (error) throw error;
+        RadarChart.draw("#c1", data, null);
+    });
+
+    d3.csv("data2.csv", function(error, data) {
+        if (error) throw error;
+        RadarChart.draw("#c2", data, null);
+    });
+
+    d3.csv("data3.csv", function(error, data) {
+        if (error) throw error;
+        RadarChart.draw("#c3", data, null);
+    });
+
+
+    window.onload = function () {
+
+        var chart = new CanvasJS.Chart("workout", {
+            animationEnabled: true,
+            zoomEnabled: true,
+            title:{
+                text: "Workout App for Northeastern"
+            },
+            axisX: {
+                title:"Frenquency go to gym (in times )",
+                minimum: 0,
+                maximum: 7
+            },
+            axisY:{
+                title: "how much do you spend on fitness per month(in USD)? ",
+                valueFormatString: "$#,##0k"
+            },
+            data: [{
+                type: "scatter",
+                toolTipContent: "<b>Area: </b>{x} sq.ft<br/><b>Price: </b>${y}k",
+                dataPoints: [
+                    { x: 6, y: 170 },
+                    { x: 3, y: 25 },
+                    { x: 3, y: 55 },
+                    { x: 6, y: 70 },
+                    { x: 1, y: 10 },
+                    { x: 2, y: 43 },
+                    { x: 1, y: 70 },
+                    { x: 4, y: 56 },
+                    { x: 5, y: 128 },
+                    { x: 3, y: 49 },
+                    { x: 4, y: 79 },
+                    { x: 1330, y: 1120 },
+                    { x: 1580, y: 1220 },
+                    { x: 1620, y: 1400 },
+                    { x: 1250, y: 1450 },
+                    { x: 1350, y: 1600 },
+                    { x: 1650, y: 1300 },
+                    { x: 1700, y: 1620 },
+                    { x: 1750, y: 1700 },
+                    { x: 1830, y: 1800 },
+                    { x: 1900, y: 2000 },
+                    { x: 2050, y: 2200 },
+                    { x: 2150, y: 1960 },
+                    { x: 2250, y: 1990 }
+                ]
+            }]
+        });
+        chart.render();
+
+    }
+
+</script>
+
 </html>
+
+
+
+
+
+
+
