@@ -88,3 +88,4 @@ else{
 window.setInterval(function(){
     buttonClicked();
 },1000)
+

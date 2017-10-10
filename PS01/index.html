@@ -28,15 +28,14 @@
 
     <div id="body">
         <div>
-    <span id="c1"></span><span style="position:absolute; left:10px; top:10px;">aha</span>
-        <span id="c2"></span>
+            <span id="c1"></span>
+            <span id="c2"></span>
         </div>
         <div id="c3"></div>
         <div id="c4"></div>
-        <div id="c5"></div>
-        <div id="c6"></div>
-        <div id="c7"></div>
 
+
+        <button type="button" onclick="buttonClicked_html()">Change Data</button>
 
 </body>
 
@@ -58,7 +57,7 @@
     });
 
 
-    var width=600, height=400, margin = {top: 20, right: 20, bottom: 30, left: 40};
+    var width=855, height=500, margin = {top: 20, right: 20, bottom: 30, left: 40};
     var xValue = function(d) { return d.frequency;}, // data -> value
         xScale = d3.scaleLinear().range([0, width]), // value -> display
         xMap = function(d) { return xScale(xValue(d));}, // data -> display
@@ -80,8 +79,9 @@
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+    var dataNear;
     d3.csv("near.csv", function(error, data) {
-
+        dataNear = data;
         // change string (from CSV) into number format
         data.forEach(function(d) {
             d.frequency = +d.frequency;
@@ -142,7 +142,7 @@
             });
 
         // draw legend
-        var legend = svg.selectAll(".legend")
+        /*var legend = svg.selectAll(".legend")
             .data(color.domain())
             .enter().append("g")
             .attr("class", "legend")
@@ -161,10 +161,63 @@
             .attr("y", 9)
             .attr("dy", ".35em")
             .style("text-anchor", "end")
-            .text(function(d) { return d;})
+            .text(function(d) { return d;})*/
     });
+    var dataOff;
+    d3.csv("off.csv", function(error, data){
+        dataOff = data;
+    });
+    var clicked = false;
+    //this function runs when the HTML button is clicked.
+
+    function myFunction(data){
+         xValue = function(d) { return d.frequency;}, // data -> value
+            xScale = d3.scaleLinear().range([0, width]), // value -> display
+            xMap = function(d) { return xScale(xValue(d));}, // data -> display
+            xAxis = d3.axisBottom(xScale);
+
+        // setup y
+         yValue = function(d) { return d.money;}, // data -> value
+            yScale = d3.scaleLinear().range([height, 0]), // value -> display
+            yMap = function(d) { return yScale(yValue(d));}, // data -> display
+            yAxis = d3.axisLeft(yScale);
+
+        // setup fill color
+         cValue = function(d) { return d.idx;},
+            color = d3.scaleOrdinal(d3.schemeCategory10);
 
 
+
+        xScale.domain([d3.min(data, xValue)-1, d3.max(data, xValue)+1]);
+        yScale.domain([d3.min(data, yValue)-1, d3.max(data, yValue)+1]);
+        svg.selectAll(".dot")
+            .data(data)
+            .transition()
+            .ease(d3.easeSin)
+            .duration(400)
+            .attr("class", "dot")
+            .attr("r", 3.5)
+            .attr("cx", xMap)
+            .attr("cy", yMap)
+            .style("fill", function(d) { return color(cValue(d));})
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height+ margin.top + margin.bottom)
+
+    }
+    function buttonClicked_html(){
+
+        //check to see whether the tracker variable is true. If it is, use the 2017 data set
+        if(clicked == true){
+            myFunction(dataNear);  //call the draw function again, to redraw the circles
+            clicked = false;       //reset the value of the tracker variable
+        }
+        else{   //if the tracker variable is not true, use the 2016 data set
+            myFunction(dataOff);
+            clicked = true;
+        }
+
+
+    }
 
 
 </script>

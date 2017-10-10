@@ -136,4 +136,19 @@
         };
 
 
+var clicked = true;
+        //this function runs when the HTML button is clicked.
+        function buttonClicked(){
 
+            //check to see whether the tracker variable is true. If it is, use the 2017 data set
+            if(clicked == true){
+                drawPoints(near);  //call the draw function again, to redraw the circles
+                clicked = false;       //reset the value of the tracker variable
+            }
+            else{   //if the tracker variable is not true, use the 2016 data set
+                drawPoints('off');
+                clicked = true;
+            }
+
+
+        }
