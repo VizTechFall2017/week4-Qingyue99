@@ -1,13 +1,16 @@
+
+var clicked = false;
+
 var svg = d3.select('svg').append('g').attr('transform','translate(200,175)');
 
-var clicked = true;
-
-var scaleX = d3.scalePoint().domain(["Never", "Less than once per month","Once per month","Once per week","2-3 times per week","4-5 times per week", "Everyday"]).range([0, 700]);
+var scaleX = d3.scalePoint().domain(["Never", "Less than once per month","Once per month","Once per week",
+    "2-3 times per week","4-5 times per week", "Everyday"]).range([0, 700]);
 var scaleY = d3.scaleLinear().domain([0,100]).range([300, 0]);
 
 svg.append("g")
     .attr('transform','translate(0,300)')
     .call(d3.axisBottom(scaleX));
+
 
 svg.append("g")
     .call(d3.axisLeft(scaleY));
@@ -16,16 +19,16 @@ svg.append("g")
 d3.csv('./Workoutweek5.csv', function(dataIn) {
 
     console.log(dataIn);
+/*
+   datahowoften = dataIn.filter(function(d){
+         return d.howoften == howoften;
+     });
 
-    datahowoften = dataIn.filter(function(d){
-        return d.howoften == howoften;
-    });
 
-
-    datawithin = dataIn.filter(function(d){
-        return d.within == within;
-    });
-
+     datawithin = dataIn.filter(function(d){
+         return d.within == within;
+     });
+*/
 
     svg.append('text')
         .text("The Frequency of NEU Students Go To Gym (Near Campus)")
@@ -49,8 +52,9 @@ d3.csv('./Workoutweek5.csv', function(dataIn) {
         .data(dataIn)
         .enter()
         .append('circle')
-        .attr('r', 7)
+        .attr('r', function(d){return (d.howoften)*0.3;})
         .attr('class', 'howoften')
+        .attr('title', function(d){return d.howoften})
         .attr('fill', "lime");
 
 
@@ -58,12 +62,14 @@ d3.csv('./Workoutweek5.csv', function(dataIn) {
         .data(dataIn)
         .enter()
         .append('circle')
-        .attr('r', 9)
+        .attr('r', function(d){return (d.within)*0.3;})
+        .attr('title', function(d){return d.within})
         .attr('class', 'within')
         .attr('fill', "blue");
 
     drawPoints(dataIn);
-    $('#testCircle').tooltip();
+    $('.howoften').tooltip();
+    $('.within').tooltip();
 
 
 });
@@ -106,13 +112,18 @@ function drawPoints(dataIn){
 
 function buttonClicked(){
     if(clicked == true){
-        drawPoints(datahowoften);
+        //drawPoints(datahowoften);
+        $('.howoften').css('opacity', '1');
+        $('.within').css('opacity', '0');
         clicked = false;
     }
     else{
-        drawPoints(datawithin);
+        //drawPoints(datawithin);
+        $('.howoften').css('opacity', '0');
+        $('.within').css('opacity', '1');
         clicked = true;
     }
 
 
 }
+
